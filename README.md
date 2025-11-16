@@ -14,16 +14,17 @@
 - [Astro](https://astro.build)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Plotly.js](https://plotly.com/javascript/)
+- [Python](https://www.python.org/)
 
 ## Instalación
 ```bash
-git clone https://github.com/JaxxBalyit/environmental-insights.git
+  git clone https://github.com/JaxxBalyit/data_visualization_Astro-Python.git
 ```
 Posteriormente, ejecutar:
 ```bash
-cd environmental-insights
-npm install # o pnpm install
-npm run dev # o pnpm dev
+  cd data_visualization_Astro-Python # o el nombre que le des
+  npm install # o pnpm install
+  npm run dev # o pnpm dev
 ```
 
 ## Autor
