@@ -2,7 +2,7 @@
 
 **Visualización interactiva de datos ambientales en México** usando **Astro + Tailwind + Plotly.js**.
 
-![Preview](docs/screenshot.png)
+![Preview](docs/Env-Dash.png)
 
 ## Características
 - Gráficos interactivos
