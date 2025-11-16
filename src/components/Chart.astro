@@ -1,0 +1,84 @@
+---
+// src/components/Chart.astro
+export interface Props {
+  title: string;
+  endpoint: string;
+  x: string;
+  y: string;
+  xLabel: string;
+  yLabel: string;
+  color?: string;
+  mode?: 'lines' | 'lines+markers' | 'markers';
+}
+
+const {
+  title,
+  endpoint,
+  x,
+  y,
+  xLabel,
+  yLabel,
+  color = '#10b981',
+  mode = 'lines+markers'
+} = Astro.props;
+
+const chartId = `chart-${crypto.randomUUID()}`;
+---
+
+<div class="bg-gray-800 rounded-xl p-5 shadow-xl border border-gray-700">
+  <h4 class="text-lg font-semibold text-white mb-3">{title}</h4>
+  <div id={chartId} class="h-72 w-full relative">
+    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+      Cargando datos...
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import Plotly from 'plotly.js-dist-min';
+
+  const div = document.getElementById(`{{chartId}}`);
+  const apiUrl = `http://localhost:8000{{endpoint}}`;
+  const xKey = "{{x}}";
+  const yKey = "{{y}}";
+  const xLabel = "{{xLabel}}";
+  const yLabel = "{{yLabel}}";
+  const color = "{{color}}";
+  const title = "{{title}}";
+  const mode = "{{mode}}";
+
+  fetch(apiUrl)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      div.innerHTML = '';
+
+      const trace = {
+        x: data.map(d => d[xKey]),
+        y: data.map(d => d[yKey]),
+        type: 'scatter',
+        mode: mode,
+        line: { color, width: 3 },
+        marker: { size: 8, color },
+        name: title
+      };
+
+      const layout = {
+        title: { text: title, font: { color: '#fff', size: 14 }, x: 0.05 },
+        xaxis: { title: xLabel, color: '#aaa', gridcolor: '#444' },
+        yaxis: { title: yLabel, color: '#aaa', gridcolor: '#444' },
+        paper_bgcolor: 'rgba(0,0,0,0)',
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        hovermode: 'x unified',
+        margin: { t: 40, r: 20, b: 50, l: 60 }
+      };
+
+      Plotly.newPlot(div, [trace], layout, { responsive: true });
+    })
+    .catch(err => {
+      div.innerHTML = `<p class="text-red-400 text-sm">Error: ${err.message}</p>`;
+      console.error('API Error:', err);
+    });
+</script>
