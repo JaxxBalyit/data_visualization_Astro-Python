@@ -9,6 +9,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.15.8"
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.15.8",
+    "plotly.js-dist-min": "^3.3.0",
+    "tailwindcss": "^4.1.17"
   }
 }
