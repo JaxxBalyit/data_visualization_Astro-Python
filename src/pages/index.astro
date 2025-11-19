@@ -10,7 +10,7 @@ import Chart from '@/components/Chart.astro';
 
   <main class="container mx-auto px-4 py-8 max-w-7xl">
     <section class="text-center mb-12">
-      <h1 class="text-5xl font-bold bg-linear-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">
+      <h1 class="text-5xl font-bold bg-linear-to-r from-pink-500 to-orange-500 bg-clip-text text-transparent">  <!-- Fix: bg-gradient-to-r -->
         Portal de Cambios Climáticos
       </h1>
       <p class="text-xl text-gray-400 mt-4">Visualización de datos ambientales en tiempo real</p>
@@ -23,7 +23,7 @@ import Chart from '@/components/Chart.astro';
         <p class="text-sm text-gray-400 mb-6">México (2015–2023)</p>
         <Chart
           title="Emisiones de CO₂"
-          endpoint="/api/co2"
+          endpoint="co2"
           x="year" y="co2_mt"
           xLabel="Año" yLabel="CO₂ (Mt)"
           color="#ef4444"
@@ -37,7 +37,7 @@ import Chart from '@/components/Chart.astro';
         <p class="text-sm text-gray-400 mb-6">Ciudad de México</p>
         <Chart
           title="Temperatura Promedio"
-          endpoint="/api/temperature"
+          endpoint="temperature"
           x="month" y="avg_temp"
           xLabel="Mes" yLabel="°C"
           color="#3b82f6"

@@ -1,5 +1,4 @@
 ---
-// src/components/Chart.astro
 export interface Props {
   title: string;
   endpoint: string;
@@ -22,7 +21,7 @@ const {
   mode = 'lines+markers'
 } = Astro.props;
 
-const chartId = `chart-${crypto.randomUUID()}`;
+const chartId = `chart-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div class="bg-gray-800 rounded-xl p-5 shadow-xl border border-gray-700">
@@ -34,51 +33,46 @@ const chartId = `chart-${crypto.randomUUID()}`;
   </div>
 </div>
 
-<script type="module">
-  import Plotly from 'plotly.js-dist-min';
+<script define:vars={{ chartId, endpoint, x, y, xLabel, yLabel, color, title, mode }} type="module">
+  const div = document.getElementById(chartId);
+  const apiUrl = `http://localhost:8000/api/${endpoint}`;
 
-  const div = document.getElementById(`{{chartId}}`);
-  const apiUrl = `http://localhost:8000{{endpoint}}`;
-  const xKey = "{{x}}";
-  const yKey = "{{y}}";
-  const xLabel = "{{xLabel}}";
-  const yLabel = "{{yLabel}}";
-  const color = "{{color}}";
-  const title = "{{title}}";
-  const mode = "{{mode}}";
+  console.log("Chart ID real:", chartId);      
+  console.log("API URL real:", apiUrl);          
 
   fetch(apiUrl)
-    .then(res => {
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
+    .then(r => {
+      if (!r.ok) throw new Error(`Error ${r.status}`);
+      return r.json();
     })
     .then(data => {
-      div.innerHTML = '';
+      console.log("Datos recibidos:", data);
+
+      div.innerHTML = ""; 
 
       const trace = {
-        x: data.map(d => d[xKey]),
-        y: data.map(d => d[yKey]),
+        x: data.map(d => d[x]),
+        y: data.map(d => d[y]),
         type: 'scatter',
         mode: mode,
-        line: { color, width: 3 },
-        marker: { size: 8, color },
+        line: { color, width: 4 },
+        marker: { size: 10 },
         name: title
       };
 
       const layout = {
-        title: { text: title, font: { color: '#fff', size: 14 }, x: 0.05 },
-        xaxis: { title: xLabel, color: '#aaa', gridcolor: '#444' },
-        yaxis: { title: yLabel, color: '#aaa', gridcolor: '#444' },
-        paper_bgcolor: 'rgba(0,0,0,0)',
-        plot_bgcolor: 'rgba(0,0,0,0)',
-        hovermode: 'x unified',
-        margin: { t: 40, r: 20, b: 50, l: 60 }
+        title: { text: title, font: { color: "#fff", size: 16 } },
+        xaxis: { title: xLabel, color: "#ccc", gridcolor: "#444" },
+        yaxis: { title: yLabel, color: "#ccc", gridcolor: "#444" },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        hovermode: "x unified"
       };
 
       Plotly.newPlot(div, [trace], layout, { responsive: true });
     })
     .catch(err => {
-      div.innerHTML = `<p class="text-red-400 text-sm">Error: ${err.message}</p>`;
-      console.error('API Error:', err);
+      div.innerHTML = `<p class="text-red-500">Error: ${err.message}</p>`;
+      console.error(err);
     });
 </script>
