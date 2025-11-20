@@ -35,7 +35,7 @@ const chartId = `chart-${Math.random().toString(36).substr(2, 9)}`;
 
 <script define:vars={{ chartId, endpoint, x, y, xLabel, yLabel, color, title, mode }} type="module">
   const div = document.getElementById(chartId);
-  const apiUrl = `http://localhost:8000/api/${endpoint}`;
+  const apiUrl = `https://mente-ecologica-api.onrender.com/api/${endpoint}`;
 
   console.log("Chart ID real:", chartId);      
   console.log("API URL real:", apiUrl);          
