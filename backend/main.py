@@ -7,7 +7,7 @@ app = FastAPI(title="MentEcológica API", version="1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4321"],
+    allow_origins=["http://localhost:4321", "https://mentecologica.netlify.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
