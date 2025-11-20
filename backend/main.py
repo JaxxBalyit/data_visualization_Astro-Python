@@ -9,7 +9,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:4321",
-        "https://mentecologica.netlify.app/"
+        "https://mentecologica.netlify.app/",
+        "*"
     ],
     allow_credentials=True,
     allow_methods=["*"],
